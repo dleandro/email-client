@@ -14,6 +14,7 @@ import {
 
 import "./tailwind.css";
 import Sidebar from "./components/sidebar";
+import { useState } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -28,7 +29,21 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export default function App() {
+  const [panelSizes, setPanelSizes] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("panelSizes");
+      return saved ? JSON.parse(saved) : [20, 80];
+    }
+    return [20, 80];
+  });
+
+  const handleLayout = (sizes: number[]) => {
+    setPanelSizes(sizes);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("panelSizes", JSON.stringify(sizes));
+    }
+  };
   return (
     <html lang="en">
       <head>
@@ -38,21 +53,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel maxSize={20}>
+        <ResizablePanelGroup
+          direction="horizontal"
+          onLayout={handleLayout}
+          className="min-h-screen"
+        >
+          <ResizablePanel
+            defaultSize={panelSizes[0]} 
+            minSize={15} 
+            maxSize={20}
+            className="transition-none" 
+          >
             <Sidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel>Two</ResizablePanel>
+          <ResizablePanel
+            defaultSize={panelSizes[1]} 
+            minSize={50} 
+            className="transition-none" 
+          >
+            <Outlet />
+          </ResizablePanel>
         </ResizablePanelGroup>
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }

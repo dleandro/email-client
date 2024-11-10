@@ -1,11 +1,4 @@
-import { Link } from "@radix-ui/react-navigation-menu";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "./ui/navigation-menu";
+import { NavigationMenu, NavigationMenuList } from "./ui/navigation-menu";
 import {
   Select,
   SelectContent,
@@ -13,21 +6,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "./ui/separator";
 import CustomNavigationMenuItem from "./navigation-menu-item";
 
 const Sidebar = () => {
-  const [selectedUser, setSelectedUser] = useState("diogo");
+  const [selectedUser, setSelectedUser] = useState(() => {
+    // Only runs once during initialization
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("selectedUser") || "diogo";
+    }
+    return "diogo";
+  });
+
   const [selectedNavItem, setSelectedNavItem] = useState<string>("inbox");
 
-  const handleNavItemClick = (item: string) => {
-    setSelectedNavItem(item);
+  useEffect(() => {
+    const path = window.location.pathname.substring(1);
+    if (path) {
+      setSelectedNavItem(path);
+    }
+  }, []);
+
+  const handleUserChange = (value: string) => {
+    localStorage.setItem("selectedUser", value);
+    setSelectedUser(value);
   };
+
   return (
     <div className="w-full">
       <div className="flex justify-center mt-4">
-        <Select value={selectedUser} onValueChange={setSelectedUser}>
+        <Select value={selectedUser} onValueChange={handleUserChange}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="User" />
           </SelectTrigger>
@@ -42,26 +51,23 @@ const Sidebar = () => {
         <NavigationMenu className="min-w-[200px]">
           <NavigationMenuList className="flex-col items-start space-x-0 w-full">
             <CustomNavigationMenuItem
-              href="/"
+              href="/inbox"
               item="inbox"
               selectedNavItem={selectedNavItem}
-              onClick={handleNavItemClick}
             >
               Inbox
             </CustomNavigationMenuItem>
             <CustomNavigationMenuItem
-              href="/"
+              href="/drafts"
               item="drafts"
               selectedNavItem={selectedNavItem}
-              onClick={handleNavItemClick}
             >
               Drafts
             </CustomNavigationMenuItem>
             <CustomNavigationMenuItem
-              href="/"
+              href="/sent"
               item="sent"
               selectedNavItem={selectedNavItem}
-              onClick={handleNavItemClick}
             >
               Sent
             </CustomNavigationMenuItem>

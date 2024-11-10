@@ -18,12 +18,12 @@ export async function loader() {
   return json({ emails });
 }
 
-export default function Inbox() {
+export default function Drafts() {
   const { emails } = useLoaderData<typeof loader>();
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Inbox</h1>
+      <h1 className="text-2xl font-bold mb-4">Drafts</h1>
       <div className="space-y-2">
         {emails.map((email) => (
           <div key={email.id} className="p-4 border rounded hover:bg-gray-50">

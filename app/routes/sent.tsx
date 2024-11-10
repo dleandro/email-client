@@ -1,36 +1,17 @@
-import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { EmailLayout } from "~/components/email-layout";
-import { Email } from "~/components/email-list";
 
 export async function loader() {
-  // Mock data - replace with real data fetch
-  const emails: Email[] = [
-    {
-      id: "1",
-      subject: "Hello",
-      preview: "Hey there...",
-      from: "",
-      to: "",
-      date: "",
-      content: "",
+  const response = await fetch("http://localhost:5173/api/emails?folder=sent");
+  const emails = await response.json();
+  return new Response(JSON.stringify({ emails }), {
+    headers: {
+      "Content-Type": "application/json",
     },
-    {
-      id: "2",
-      subject: "Meeting",
-      preview: "Can we meet...",
-      from: "",
-      to: "",
-      date: "",
-      content: "",
-    },
-  ];
-
-  return json({ emails });
+  });
 }
 
 export default function Sent() {
   const { emails } = useLoaderData<typeof loader>();
-
   return <EmailLayout title="Sent" emails={emails} />;
 }

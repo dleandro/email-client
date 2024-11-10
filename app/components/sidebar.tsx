@@ -22,7 +22,7 @@ const Sidebar = () => {
     return "diogo";
   });
 
-  const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
+  const [selectedNavItem, setSelectedNavItem] = useState<string>("");
 
   useEffect(() => {
     const path = window.location.pathname.substring(1);
@@ -72,6 +72,7 @@ const Sidebar = () => {
               href="/inbox"
               item="inbox"
               selectedNavItem={selectedNavItem}
+              setSelectedNavItem={setSelectedNavItem}
             >
               Inbox
             </CustomNavigationMenuItem>
@@ -79,6 +80,7 @@ const Sidebar = () => {
               href="/drafts"
               item="drafts"
               selectedNavItem={selectedNavItem}
+              setSelectedNavItem={setSelectedNavItem}
             >
               Drafts
             </CustomNavigationMenuItem>
@@ -86,6 +88,7 @@ const Sidebar = () => {
               href="/sent"
               item="sent"
               selectedNavItem={selectedNavItem}
+              setSelectedNavItem={setSelectedNavItem}
             >
               Sent
             </CustomNavigationMenuItem>

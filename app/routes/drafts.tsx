@@ -1,21 +1,17 @@
-// app/routes/inbox.tsx
-import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { EmailLayout } from "~/components/email-layout";
-import { Email } from "~/components/email-list";
 
 export async function loader() {
-  // Mock data - replace with real data fetch
-  const emails: Email[] = [
-    { id: "1", subject: "Hello", preview: "Hey there...", from: "", to: "", date: "", content: "" },
-    { id: "2", subject: "Meeting", preview: "Can we meet...", from: "", to: "", date: "", content: "" },
-  ];
-
-  return json({ emails });
+  const response = await fetch("http://localhost:5173/api/emails?folder=drafts");
+  const emails = await response.json();
+  return new Response(JSON.stringify({ emails }), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 export default function Drafts() {
   const { emails } = useLoaderData<typeof loader>();
-
-   return <EmailLayout title="Drafts" emails={emails} />;
+  return <EmailLayout title="Drafts" emails={emails} />;
 }

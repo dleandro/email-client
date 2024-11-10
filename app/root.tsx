@@ -6,8 +6,14 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "./components/ui/resizable";
 
 import "./tailwind.css";
+import Sidebar from "./components/sidebar";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -35,6 +41,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel maxSize={20}>
+            <Sidebar />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel>Two</ResizablePanel>
+        </ResizablePanelGroup>
       </body>
     </html>
   );

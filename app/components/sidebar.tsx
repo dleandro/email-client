@@ -70,7 +70,7 @@ const Sidebar = () => {
             <Separator className="mt-4" />
             <CustomNavigationMenuItem
               href="/inbox"
-              item="inbox"
+              item="INBOX"
               selectedNavItem={selectedNavItem}
               setSelectedNavItem={setSelectedNavItem}
             >
@@ -78,7 +78,7 @@ const Sidebar = () => {
             </CustomNavigationMenuItem>
             <CustomNavigationMenuItem
               href="/drafts"
-              item="drafts"
+              item="DRAFTS"
               selectedNavItem={selectedNavItem}
               setSelectedNavItem={setSelectedNavItem}
             >
@@ -86,7 +86,7 @@ const Sidebar = () => {
             </CustomNavigationMenuItem>
             <CustomNavigationMenuItem
               href="/sent"
-              item="sent"
+              item="SENT"
               selectedNavItem={selectedNavItem}
               setSelectedNavItem={setSelectedNavItem}
             >

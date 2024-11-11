@@ -1,8 +1,7 @@
-import { Email } from "~/routes/api.emails";
+import { EmailResponse } from "~/api/email-api";
 
-// app/components/EmailDetails.tsx
 interface EmailDetailsProps {
-  email: Email | null;
+  email: EmailResponse | null;
 }
 
 export function EmailDetails({ email }: EmailDetailsProps) {

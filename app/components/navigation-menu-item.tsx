@@ -25,7 +25,7 @@ const CustomNavigationMenuItem: React.FC<NavigationMenuItemProps> = ({
       <Link to={href} className="w-full block">
         <NavigationMenuLink
           data-item={item}
-          onClick={(e) => {
+          onClick={() => {
             setSelectedNavItem(item);
           }}
           className={`w-full block min-w-[200px] h-12 px-4 py-2 text-left ${navigationMenuTriggerStyle()} ${

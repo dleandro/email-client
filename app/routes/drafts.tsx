@@ -1,17 +1,14 @@
 import { useLoaderData } from "@remix-run/react";
 import { EmailLayout } from "~/components/email-layout";
+import { emailApi } from "~/api/email-api";
+import { json } from "@remix-run/node";
 
 export async function loader() {
-  const response = await fetch("http://localhost:5173/api/emails?folder=drafts");
-  const emails = await response.json();
-  return new Response(JSON.stringify({ emails }), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const emails = await emailApi.getEmailsByFolder("DRAFTS");
+  return json(emails);
 }
 
 export default function Drafts() {
-  const { emails } = useLoaderData<typeof loader>();
+  const emails = useLoaderData<typeof loader>();
   return <EmailLayout title="Drafts" emails={emails} />;
 }

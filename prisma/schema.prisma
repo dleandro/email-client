@@ -27,6 +27,6 @@ model Email {
   preview   String
   date      DateTime @default(now())
   folder    Folder
-  tag       String
+  tags      String[]
   status    Status
 }

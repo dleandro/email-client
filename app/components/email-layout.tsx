@@ -1,23 +1,29 @@
 import { useState } from "react";
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "./ui/resizable";
-import { EmailList, Email } from "./email-list";
+import { EmailList } from "./email-list";
 import { EmailDetails } from "./email-details";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+import { EmailResponse } from "~/api/email-api";
 
 interface EmailLayoutProps {
   title: string;
-  emails: Email[];
+  emails: EmailResponse[];
 }
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Import icons
-import { Button } from "./ui/button";
 
-export function EmailLayout({ title, emails }: EmailLayoutProps) {
-  const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
+export function EmailLayout({ title, emails: initialEmails }: EmailLayoutProps) {
+  const [emails, setEmails] = useState(initialEmails);
+  const [selectedEmail, setSelectedEmail] = useState<EmailResponse | null>(null);
   const [isEmailDetailPanelCollapsed, setIsEmailDetailPanelCollapsed] =
     useState(true);
+
+  
 
   return (
     <ResizablePanelGroup direction="horizontal">
@@ -26,6 +32,7 @@ export function EmailLayout({ title, emails }: EmailLayoutProps) {
           <h1 className="text-2xl font-bold mb-4">{title}</h1>
           <EmailList
             emails={emails}
+            setEmails={setEmails}
             onSelect={(e) => {
               setSelectedEmail(e);
               setIsEmailDetailPanelCollapsed(!isEmailDetailPanelCollapsed);

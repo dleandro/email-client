@@ -14,7 +14,7 @@ CREATE TABLE "Email" (
     "preview" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "folder" "Folder" NOT NULL,
-    "tag" TEXT NOT NULL,
+    "tags" TEXT[],
     "status" "Status" NOT NULL,
 
     CONSTRAINT "Email_pkey" PRIMARY KEY ("id")

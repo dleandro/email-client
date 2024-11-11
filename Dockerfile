@@ -28,7 +28,7 @@ ENV NODE_ENV=production
 
 RUN npm install --production
 
-EXPOSE 3000
+EXPOSE 5173
 
 RUN echo '#!/bin/sh' > /init.sh && \
     echo 'set -e' >> /init.sh && \
@@ -37,5 +37,5 @@ RUN echo '#!/bin/sh' > /init.sh && \
     echo 'npm start' >> /init.sh && \
     chmod +x /init.sh
 
-EXPOSE 3000
+EXPOSE 5173
 ENTRYPOINT ["/init.sh"]

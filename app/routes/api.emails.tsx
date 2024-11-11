@@ -1,13 +1,15 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
-interface Email {
+export interface Email {
   id: string;
-  to: string;
-  from: string;
   subject: string;
-  content: string;
   preview: string;
+  content: string;
+  from: string;
+  to: string;
   date: string;
+  tags: string[];
+  status: "UNREAD" | "READ"; // Email status
   folder: "inbox" | "sent" | "drafts";
 }
 
@@ -21,6 +23,8 @@ const mockEmails: Email[] = [
     preview: "Let's discuss the project...",
     date: new Date().toISOString(),
     folder: "inbox",
+    status: "UNREAD",
+    tags: ["work"],
   },
   {
     id: "2",
@@ -31,6 +35,8 @@ const mockEmails: Email[] = [
     preview: "Here's the latest update...",
     date: new Date().toISOString(),
     folder: "sent",
+    status: "READ",
+    tags: [],
   },
   {
     id: "3",
@@ -41,6 +47,8 @@ const mockEmails: Email[] = [
     preview: "This is a draft...",
     date: new Date().toISOString(),
     folder: "drafts",
+    status: "UNREAD",
+    tags: [],
   },
 ];
 

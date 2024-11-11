@@ -1,4 +1,4 @@
-import { Email } from "./email-list";
+import { Email } from "~/routes/api.emails";
 
 // app/components/EmailDetails.tsx
 interface EmailDetailsProps {

@@ -4,8 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-COPY prisma ./prisma/
-RUN npm install && npx prisma generate
+RUN npm install
 
 COPY . .
 
@@ -31,4 +30,12 @@ RUN npm install --production
 
 EXPOSE 3000
 
-CMD ["./wait-for-it.sh", "db:5432", "--", "sh", "-c", "npx prisma migrate dev --name init && npm start"]
+RUN echo '#!/bin/sh' > /init.sh && \
+    echo 'set -e' >> /init.sh && \
+    echo 'npx prisma generate' >> /init.sh && \
+    echo 'npx prisma migrate deploy' >> /init.sh && \
+    echo 'npm start' >> /init.sh && \
+    chmod +x /init.sh
+
+EXPOSE 3000
+ENTRYPOINT ["/init.sh"]

@@ -7,25 +7,24 @@ const emailService = new EmailService();
 
 export async function loader({ request }: LoaderFunctionArgs) {
   try {
-    const url = new URL(request.url, "http://localhost:5173");
-    const folder = url.searchParams.get("folder");
-    
+    const searchParams = new URLSearchParams(request.url.split("?")[1]);
+    const folder = searchParams.get("folder");
+
     // Validate folder parameter
     if (folder && !Object.values(EmailFolder).includes(folder as EmailFolder)) {
-      console.log("here")
       return new Response(
         JSON.stringify({ error: "Invalid folder parameter" }),
         { status: 400 }
       );
     }
-    
+
     if (!folder) {
       return new Response(
         JSON.stringify({ error: "Folder parameter is required" }),
         { status: 400 }
       );
     }
-    
+
     const emails = await emailService.getEmailsByFolder(folder);
     const emailResponses = mapEmailsToEmailResponses(emails);
     return new Response(JSON.stringify(emailResponses), {
@@ -55,7 +54,6 @@ export async function action({ request }: LoaderFunctionArgs) {
     await emailService.createEmail({ to, subject, content, folder });
     return new Response(null, { status: 201 });
   } catch (error) {
-    console.log(error);
     return new Response("Failed to create email", { status: 500 });
   }
 }

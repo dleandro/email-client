@@ -19,7 +19,6 @@ export const emailApi = {
   async getEmailsByFolder(folder: string): Promise<EmailResponse[]> {
     const response = await fetch(`${BASE_URL}?folder=${folder}`);
     if (!response.ok) {
-      console.log(response);
       throw new Error("Failed to fetch emails");
     }
     return response.json();

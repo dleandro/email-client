@@ -1,40 +1,40 @@
-# Welcome to Remix!
+# Email Client
 
-- 📖 [Remix docs](https://remix.run/docs)
+This is an email client application built with Remix, Tailwind CSS, and Prisma.
+
+## Prerequisites
+
+- Node.js (v20.16 or higher)
+- PostgreSQL
+
+## Setup
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/email-client.git
+   cd email-client
+   ```
+2. `npm install`
+3. cp .env.example .env
+4. execute your db instance with the connection url in your .env
+5. `npx prisma generate`
+6. `npx prisma migrate dev`
 
 ## Development
+To start the development server with hot reloading, run:
 
-Run the dev server:
+1. `npm run dev`
 
-```shellscript
-npm run dev
-```
+## Running production build without docker
+1. `npm run build`
+2. `npm start`
 
-## Deployment
+## Recommended way to execute
 
-First, build your app for production:
+### Prerequisites
 
-```sh
-npm run build
-```
+- Docker
+- Docker Compose
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+Just run `docker-compose up --build` and open your browser on `http://localhost:5173`

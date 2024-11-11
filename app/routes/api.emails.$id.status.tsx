@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { EmailService } from "~/application/EmailService";
+import { EmailStatus } from "~/domain/models/Email";
 
 const emailService = new EmailService();
 
@@ -11,7 +12,7 @@ export async function action({ params, request }: LoaderFunctionArgs) {
   const { id } = params;
   const { status } = await request.json();
 
-  if (!id || !status || !["READ", "UNREAD"].includes(status)) {
+  if (!id || !status || !Object.values(EmailStatus).includes(status)) {
     return new Response("Invalid request", { status: 400 });
   }
 

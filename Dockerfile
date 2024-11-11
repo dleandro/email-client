@@ -20,7 +20,6 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package*.json ./
-COPY wait-for-it.sh ./
 
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}

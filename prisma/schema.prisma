@@ -1,0 +1,32 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Folder {
+  INBOX
+  SENT
+  DRAFTS
+}
+
+enum Status {
+  READ
+  UNREAD
+}
+
+model Email {
+  id        String   @id @default(uuid())
+  to        String
+  from      String
+  subject   String
+  content   String
+  preview   String
+  date      DateTime @default(now())
+  folder    Folder
+  tag       String
+  status    Status
+}
